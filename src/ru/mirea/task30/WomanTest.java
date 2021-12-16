@@ -11,7 +11,7 @@ public class WomanTest {
     @Test
     public void testToString(){
         Woman w1 = new Woman("Irina", 58, "blue", "black", 22);
-        Woman w2 = new Woman("Mia", 49, "green", "brown", 18);
+        Woman w2 = new Woman("Sasha", 49, "green", "brown", 18);
 
         ArrayList<String> expected = new ArrayList<>();
         expected.add("Woman: " + "name=Irina" + "; " +
@@ -37,7 +37,7 @@ public class WomanTest {
     @Test
     public void testHashCode(){
         Woman w1 = new Woman("Irina", 58, "blue", "black", 22);
-        Woman w2 = new Woman("Mia", 49, "green", "brown", 18);
+        Woman w2 = new Woman("Sasha", 49, "green", "brown", 18);
         Woman w3 = new Woman("Anna", 55, "blue", "black", 21);
         Woman w4 = new Woman("Kristina", 54, "green", "red", 20);
 

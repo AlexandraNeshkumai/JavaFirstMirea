@@ -1,14 +1,79 @@
 package ru.mirea.task26;
+import java.util.Scanner;
+
+interface PayStrategy{
+    public void payment();
+}
+
+class eWalletStrategy implements PayStrategy{
+
+    public void payment() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ваш заказ будет оплачен с помощью электронного кошелька. Введите номер кошелька: ");
+        String card = sc.next();
+        System.out.println("Введите пин-код: ");
+        int pin = sc.nextInt();
+
+        System.out.println("Заказ оформлен.");
+    }
+}
+
+class debitCardStrategy implements PayStrategy{
+
+    public void payment() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ваш заказ будет оплачен с помощью дебетовой карты. Введите номер карты: ");
+        String card = sc.next();
+
+        System.out.println("Введите пин-код: ");
+        int pin = sc.nextInt();
+
+        System.out.println("Заказ оформлен.");
+    }
+}
 
 public class Test {
-    public static void main(String[] args) {
-        Money eur = new EUR();
-        Money kpw = new KPW();
-        Money usd = new USD();
+    int order_id;
+    PayStrategy payStrategy;
 
-        eur.convers(3000);
-        kpw.convers(3000);
-        usd.convers(3000);
+    public Test(int order_id) {
+        this.order_id = order_id;
+    }
 
+    public void payment() {
+        payStrategy.payment();
+    }
+
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Пожалуйста, введите артикул товара: ");
+        int order = sc.nextInt();
+
+        System.out.println("Теперь выберите способ оплаты: ");
+        System.out.println("1 - Электронный кошелек");
+        System.out.println("2 - Банковская карта");
+
+        int action = sc.nextInt();
+        Test payment;
+        switch (action) {
+            case 1 -> payment = new eWalletPayment(order);
+            case 2 -> payment = new debitCardPayment(order);
+            default -> throw new IllegalStateException("Некорректное значение.");
+        }
+        payment.payment();
+    }
+}
+
+class eWalletPayment extends Test {
+    public eWalletPayment(int order_id) {
+        super(order_id);
+        this.payStrategy = new eWalletStrategy();
+    }
+}
+
+class debitCardPayment extends Test{
+    public debitCardPayment(int order_id) {
+        super(order_id);
+        this.payStrategy = new debitCardStrategy();
     }
 }
